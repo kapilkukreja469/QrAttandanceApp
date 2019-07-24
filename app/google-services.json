@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "543874377454",
+    "firebase_url": "https://qrattandanceapp.firebaseio.com",
+    "project_id": "qrattandanceapp",
+    "storage_bucket": "qrattandanceapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:543874377454:android:665b88f8a015f723",
+        "android_client_info": {
+          "package_name": "com.example.qrattandanceapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "543874377454-ba864fg45gsrca4v1k7tc1s9a52ctnb8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.qrattandanceapp",
+            "certificate_hash": "30ab6f47a08af81ad4a7f0b998575711aab251e5"
+          }
+        },
+        {
+          "client_id": "543874377454-epnc8dng7aup3pvf5h0se6fkv1cq0j2r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBwhjXaH26pFYPCiMEggUPuy76JbGLENis"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "543874377454-epnc8dng7aup3pvf5h0se6fkv1cq0j2r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

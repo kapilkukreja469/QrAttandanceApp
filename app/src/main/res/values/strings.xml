@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">AttendanceApp</string>
+    <string name="title_activity_admin_module">AdminModule</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="title_activity_student_module">StudentModule</string>
+    <string name="title_activity_student__attendance__fetch">Student_Attendance_Fetch</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
