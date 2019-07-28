@@ -11,28 +11,31 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.qrattandanceapp.OnFragmentInteractionListener;
 import com.example.qrattandanceapp.R;
-import com.example.qrattandanceapp.Student_Attendance_Fetch;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class StudentAttendanceFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    private TextView mTextMessage;
-    DatabaseReference reference;
-    StringBuilder builder = new StringBuilder();
     private String mParam1;
     private String mParam2;
+    DatabaseReference reference;
+    ListView listView;
+    ArrayList<String> mylist = new ArrayList<String>();
     private OnFragmentInteractionListener mListener;
-
     public StudentAttendanceFragment() {
     }
 
@@ -54,14 +57,14 @@ public class StudentAttendanceFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
         reference = FirebaseDatabase.getInstance().getReference("Attendance:");
+
         getData();
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View v= inflater.inflate(R.layout.fragment_student_attendance, container, false);
-        mTextMessage = v.findViewById(R.id.message);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View v = inflater.inflate(R.layout.fragment_student_attendance, container, false);
+        listView = v.findViewById(R.id.listView);
         return v;
     }
 
@@ -94,8 +97,8 @@ public class StudentAttendanceFragment extends Fragment {
         reference.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                builder.append(dataSnapshot.getValue(String.class) + "\n");
-                showData(builder);
+                mylist.add(dataSnapshot.getValue(String.class));
+                showData(mylist);
             }
 
             @Override
@@ -117,7 +120,8 @@ public class StudentAttendanceFragment extends Fragment {
         });
     }
 
-    private void showData(StringBuilder builder) {
-        mTextMessage.setText(builder);
+    private void showData(List mylist) {
+        final ArrayAdapter<String> adapter3 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, mylist);
+        listView.setAdapter(adapter3);
     }
 }

@@ -103,7 +103,7 @@ public class StudentProfileFragment extends Fragment {
                 mNoTxt.setText(studentsModel.getmNo()+"");
                 registrationNoTxt.setText(studentsModel.getRegistrationNo()+"");
                 courseIdTxt.setText(studentsModel.getCourse()+"");
-                Toast.makeText(getActivity(),""+studentsModel.getRegistrationNo(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(),""+studentsModel, Toast.LENGTH_SHORT).show();
             }
 
             @Override

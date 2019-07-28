@@ -73,7 +73,6 @@ public class LoginActivity extends AppCompatActivity {
         admin = findViewById(R.id.admin);
         new CountDownTimer(8000, 1000) {
             public void onTick(long millisUntilFinished) {
-            admin.setText(millisUntilFinished/1000+"");
             }
 
             public void onFinish() {

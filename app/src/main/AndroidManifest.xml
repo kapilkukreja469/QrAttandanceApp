@@ -16,14 +16,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".Student_Attendance_Fetch"
-            android:label="@string/title_activity_student__attendance__fetch"></activity>
-        <activity
             android:name=".StudentModule"
-            android:label="@string/title_activity_student_module"></activity>
+            android:label="@string/title_activity_student_module"/>
         <activity
             android:name=".AdminModule"
-            android:label="@string/title_activity_admin_module"></activity>
+            android:label="@string/title_activity_admin_module"/>
         <activity android:name=".OtpActivity" />
         <activity android:name=".AdminLoginActivity" />
         <activity android:name=".RegisterActivity" />
