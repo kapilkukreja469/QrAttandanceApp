@@ -2,18 +2,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/navigation_home"
+        android:id="@+id/navigation_daily"
         android:icon="@drawable/today"
         android:title="Today" />
 
     <item
-        android:id="@+id/navigation_dashboard"
+        android:id="@+id/navigation_student"
         android:icon="@drawable/student"
         android:title="Student" />
 
     <item
-        android:id="@+id/navigation_notifications"
-        android:icon="@drawable/group"
-        android:title="Group" />
+        android:id="@+id/navigation_qr_generator"
+        android:icon="@drawable/scan"
+        android:title="Qr Generator" />
 
 </menu>

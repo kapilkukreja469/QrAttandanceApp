@@ -1,12 +1,12 @@
 package com.example.qrattandanceapp.mymodel;
 
-public class StudentsModel {
+public class StudentsDataModel {
     String name, emailId, password, mNo, registrationNo, course;
 
-    public StudentsModel() {
+    public StudentsDataModel() {
     }
 
-    public StudentsModel(String name, String emailId, String password, String mNo, String registrationNo, String course) {
+    public StudentsDataModel(String name, String emailId, String password, String mNo, String registrationNo, String course) {
         this.password = password;
         this.name = name;
         this.emailId = emailId;
@@ -61,7 +61,7 @@ public class StudentsModel {
 
     @Override
     public String toString() {
-        return "StudentsModel{" +
+        return "StudentsDataModel{" +
                 "name='" + name + '\'' +
                 ", emailId='" + emailId + '\'' +
                 ", password='" + password + '\'' +

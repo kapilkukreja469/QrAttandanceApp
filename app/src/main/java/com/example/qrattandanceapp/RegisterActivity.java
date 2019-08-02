@@ -9,10 +9,14 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Patterns;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.qrattandanceapp.mymodel.StudentsModel;
+import com.example.qrattandanceapp.mymodel.StudentsDataModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
@@ -26,7 +30,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class RegisterActivity extends AppCompatActivity {
-    TextInputEditText userName, email, pass, phone, regNo, courseName;
+    TextInputEditText userName, email, pass, phone, regNo;
+    Spinner courseName;
+    String[] courseList = {"None", "Andriod", "python", "DataStructure"};
     String name, emailId, password, mNo, registrationNo, course;
     private FirebaseAuth mAuth;
     ProgressDialog progressDialog;
@@ -50,6 +56,22 @@ public class RegisterActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference("Students:");
+
+        courseName.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                course = courseList[position];
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                ((TextView) courseName.getSelectedView()).setError("please select course");
+                return;
+            }
+        });
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, courseList);
+        courseName.setAdapter(adapter);
+
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -78,6 +100,7 @@ public class RegisterActivity extends AppCompatActivity {
     public void updateUI(FirebaseUser user) {
         Intent intent = new Intent(RegisterActivity.this, StudentModule.class);
         startActivity(intent);
+        finish();
     }
 
     public void validate_Data() {
@@ -87,6 +110,7 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
         emailId = email.getText().toString();
+        emailId = emailId.toLowerCase();
         if (!Patterns.EMAIL_ADDRESS.matcher(emailId).matches()) {
             email.setError("Enter Valid Email ID");
             return;
@@ -106,11 +130,12 @@ public class RegisterActivity extends AppCompatActivity {
             regNo.setError("please enter your registration number");
             return;
         }
-        course = courseName.getText().toString();
-        if (TextUtils.isEmpty(course)) {
-            courseName.setError("please enter your course name");
+        if (course.equals("None")) {
+            ((TextView) courseName.getSelectedView()).setError("please select course");
+            Toast.makeText(this, "please select course", Toast.LENGTH_SHORT).show();
             return;
         }
+
         progressDialog.setMessage("Registering Please wait...");
         progressDialog.show();
         firebaseRegister(emailId, password);
@@ -126,7 +151,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void storeDataInFirebase(DatabaseReference myRef) {
-        StudentsModel studentsModel = new StudentsModel(name, emailId, password, mNo, registrationNo, course);
+        StudentsDataModel studentsModel = new StudentsDataModel(name, emailId, password, mNo, registrationNo, course);
         String id = myRef.push().getKey();
         myRef.child(id).setValue(studentsModel);
     }

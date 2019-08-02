@@ -1,7 +1,6 @@
 package com.example.qrattandanceapp.fragment;
 
-import android.content.Context;
-import android.net.Uri;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,11 +12,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.qrattandanceapp.OnFragmentInteractionListener;
 import com.example.qrattandanceapp.R;
+import com.example.qrattandanceapp.mymodel.ScanDataModel;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -28,36 +29,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class StudentAttendanceFragment extends Fragment {
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-    private String mParam1;
-    private String mParam2;
     DatabaseReference reference;
-    ListView listView;
-    ArrayList<String> mylist = new ArrayList<String>();
+        ListView listView;
+        ScanDataModel scanDataModel = new ScanDataModel();
+        ArrayList<String> mylist = new ArrayList<String>();
+        ProgressDialog progressDialog;
     private OnFragmentInteractionListener mListener;
-    public StudentAttendanceFragment() {
-    }
 
-    // TODO: Rename and change types and number of parameters
-    public static StudentAttendanceFragment newInstance(String param1, String param2) {
-        StudentAttendanceFragment fragment = new StudentAttendanceFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+    public StudentAttendanceFragment() {
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
         reference = FirebaseDatabase.getInstance().getReference("Attendance:");
-
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setMessage("Please Wait...");
+        progressDialog.show();
         getData();
     }
 
@@ -68,37 +56,19 @@ public class StudentAttendanceFragment extends Fragment {
         return v;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
     public void getData() {
         reference.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                mylist.add(dataSnapshot.getValue(String.class));
-                showData(mylist);
+                scanDataModel = dataSnapshot.getValue(ScanDataModel.class);
+                String id = scanDataModel.getMailid();
+                FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                FirebaseUser currentUser = mAuth.getCurrentUser();
+                progressDialog.dismiss();
+                if (id.equals(currentUser.getEmail())) {
+                    mylist.add(scanDataModel.getDate() + " time: " + scanDataModel.getTime());
+                    showData(mylist);
+                }
             }
 
             @Override

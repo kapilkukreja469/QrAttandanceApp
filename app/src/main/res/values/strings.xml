@@ -7,6 +7,5 @@
     <string name="title_activity_student_module">StudentModule</string>
     <string name="title_activity_student__attendance__fetch">Student_Attendance_Fetch</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

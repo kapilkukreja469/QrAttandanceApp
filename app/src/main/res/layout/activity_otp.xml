@@ -19,6 +19,7 @@
 
         <EditText
             android:id="@+id/one"
+            android:hint="Enter OTP"
             android:inputType="number"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
@@ -36,6 +37,7 @@
         android:layout_marginStart="130dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="130dp"
+        android:background="@drawable/circleshape"
         android:onClick="verify"
         android:text="Verify Otp" />
 </RelativeLayout>

@@ -2,57 +2,69 @@ package com.example.qrattandanceapp.fragment;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
-
 import com.example.qrattandanceapp.OnFragmentInteractionListener;
 import com.example.qrattandanceapp.R;
-import com.example.qrattandanceapp.mymodel.StudentsDataModel;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import com.example.qrattandanceapp.mymodel.ScanDataModel;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class StudentProfileFragment extends Fragment {
+import java.util.ArrayList;
+import java.util.List;
 
+public class DailyReportFragment extends Fragment {
     DatabaseReference reference;
-    TextView nameTxt, emailTxt, mNoTxt, registrationNoTxt, courseIdTxt;
-    private OnFragmentInteractionListener mListener;
-    StudentsDataModel studentsModel = new StudentsDataModel();
+    ListView listView;
+    ScanDataModel scanDataModel;
+    ArrayList<String> mylist = new ArrayList<String>();
     ProgressDialog progressDialog;
+    EditText date;
+    Button btn;
+    private OnFragmentInteractionListener mListener;
 
-    public StudentProfileFragment() {
+    public DailyReportFragment() {
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        reference = FirebaseDatabase.getInstance().getReference("Students:");
+        reference = FirebaseDatabase.getInstance().getReference("Attendance:");
+        scanDataModel = new ScanDataModel();
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage("Please Wait...");
-        progressDialog.show();
-        getData();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_student_profile, container, false);
-        nameTxt = v.findViewById(R.id.name);
-        emailTxt = v.findViewById(R.id.email);
-        mNoTxt = v.findViewById(R.id.mobileNo);
-        registrationNoTxt = v.findViewById(R.id.registration_number);
-        courseIdTxt = v.findViewById(R.id.course_id);
+        View v = inflater.inflate(R.layout.fragment_daily_report, container, false);
+        listView = v.findViewById(R.id.listView);
+        date = v.findViewById(R.id.date);
+        btn = v.findViewById(R.id.getData);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mylist.clear();
+                listView.setAdapter(null);
+                progressDialog.show();
+                getData();
+            }
+        });
         return v;
     }
 
@@ -60,17 +72,12 @@ public class StudentProfileFragment extends Fragment {
         reference.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                studentsModel = dataSnapshot.getValue(StudentsDataModel.class);
-                String id = studentsModel.getEmailId();
-                FirebaseAuth mAuth = FirebaseAuth.getInstance();
-                FirebaseUser currentUser = mAuth.getCurrentUser();
+                scanDataModel = dataSnapshot.getValue(ScanDataModel.class);
+                String id = scanDataModel.getDate();
                 progressDialog.dismiss();
-                if (id.equals(currentUser.getEmail())) {
-                    nameTxt.setText(studentsModel.getName() + "");
-                    emailTxt.setText(studentsModel.getEmailId() + "");
-                    mNoTxt.setText(studentsModel.getmNo() + "");
-                    registrationNoTxt.setText(studentsModel.getRegistrationNo() + "");
-                    courseIdTxt.setText(studentsModel.getCourse() + "");
+                if (id.equals(date.getText().toString())) {
+                    mylist.add(scanDataModel.getMailid() + "  TIME: " + scanDataModel.getTime());
+                    showData(mylist);
                 }
             }
 
@@ -91,5 +98,10 @@ public class StudentProfileFragment extends Fragment {
                 Toast.makeText(getActivity(), "failed to read value", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void showData(List mylist) {
+        final ArrayAdapter<String> adapter3 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, mylist);
+        listView.setAdapter(adapter3);
     }
 }

@@ -3,7 +3,10 @@ package com.example.qrattandanceapp.mymodel;
 public class ScanDataModel {
     String mailid,date,time;
 
-    public ScanDataModel(String mailid, String date,String time) {
+    public ScanDataModel() {
+    }
+
+    public ScanDataModel(String mailid, String date, String time) {
         this.mailid = mailid;
         this.date = date;
         this.time = time;
@@ -33,4 +36,12 @@ public class ScanDataModel {
         this.date = date;
     }
 
+    @Override
+    public String toString() {
+        return "ScanDataModel{" +
+                "mailid='" + mailid + '\'' +
+                ", date='" + date + '\'' +
+                ", time='" + time + '\'' +
+                '}';
+    }
 }
