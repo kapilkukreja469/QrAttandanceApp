@@ -2,17 +2,14 @@ package com.example.qrattandanceapp;
 
 import android.content.Intent;
 import android.os.Bundle;
-
 import com.example.qrattandanceapp.fragment.AllStudentAttendanceFragment;
 import com.example.qrattandanceapp.fragment.StudentProfileFragment;
 import com.example.qrattandanceapp.fragment.DailyReportFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;

@@ -1,59 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".fragment.StudentProfileFragment">
-    <ImageView
-        android:id="@+id/image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/circleshape" />
 
-    <TextView
-        android:id="@+id/name"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:background="@drawable/circleshapedit"
-        android:hint="Name"
-        android:padding="8dp" />
+        android:layout_marginTop="50dp"
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/email"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:background="@drawable/circleshapedit"
-        android:hint="Email"
-        android:padding="8dp" />
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_user"
+            android:drawableBottom="@drawable/ic_line"
+            android:drawablePadding="2dp"
+            android:hint="Name"
+            android:textSize="18sp" />
 
-    <TextView
-        android:id="@+id/mobileNo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:background="@drawable/circleshapedit"
-        android:hint="mobileNo"
-        android:padding="8dp" />
+        <TextView
+            android:id="@+id/email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_mail"
+            android:drawableBottom="@drawable/ic_line"
+            android:drawablePadding="2dp"
+            android:hint="Email"
+            android:textSize="18sp" />
 
-    <TextView
-        android:id="@+id/registration_number"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:background="@drawable/circleshapedit"
-        android:hint="RegistrationNo"
-        android:padding="8dp" />
+        <TextView
+            android:id="@+id/course_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_course"
+            android:drawableBottom="@drawable/ic_line"
+            android:drawablePadding="2dp"
+            android:hint="Course"
+            android:textSize="18sp" />
 
-    <TextView
-        android:id="@+id/course_id"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:background="@drawable/circleshapedit"
-        android:hint="CourseId"
-        android:padding="8dp" />
+        <TextView
+            android:id="@+id/mobileNo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_phone"
+            android:drawableBottom="@drawable/ic_line"
+            android:drawablePadding="2dp"
+            android:hint="MobileNo"
+            android:inputType="number"
+            android:textSize="18sp" />
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/regestrationNo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_registration"
+            android:drawableBottom="@drawable/ic_line"
+            android:drawablePadding="2dp"
+            android:hint="Registration Number"
+            android:textSize="18sp" />
+
+    </LinearLayout>
+    
+</RelativeLayout>

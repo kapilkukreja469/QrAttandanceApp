@@ -45,6 +45,7 @@
             android:background="@drawable/circleshapedit"
             android:drawableStart="@drawable/ic_user"
             android:hint="User ID"
+            android:maxLength="50"
             android:padding="10dp" />
 
         <EditText

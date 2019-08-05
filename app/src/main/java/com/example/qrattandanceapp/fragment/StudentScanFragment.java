@@ -19,11 +19,15 @@ import com.example.qrattandanceapp.ScanCode;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class StudentScanFragment extends Fragment {
-    public static TextView scanResult, email;
+    public static TextView scanResult, email,datetxt;
     Button scanBtn;
     private FirebaseAuth mAuth;
     String emailId;
+    SimpleDateFormat sdf;
     private OnFragmentInteractionListener mListener;
 
     public StudentScanFragment() {
@@ -35,6 +39,7 @@ public class StudentScanFragment extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         emailId = currentUser.getEmail();
+        sdf = new SimpleDateFormat("dd.MM.yyyy");
     }
 
     @Override
@@ -42,8 +47,10 @@ public class StudentScanFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_student_scan, container, false);
         scanResult = v.findViewById(R.id.scanResult);
         email = v.findViewById(R.id.user);
+        datetxt=v.findViewById(R.id.txt);
         scanBtn = v.findViewById(R.id.scan);
-        email.setText(emailId);
+        email.setText("Welcome  "+emailId);
+        datetxt.setText("Today's Date  "+sdf.format(new Date()));
         scanBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

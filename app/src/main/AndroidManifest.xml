@@ -21,17 +21,16 @@
         <activity
             android:name=".AdminModule"
             android:label="@string/title_activity_admin_module">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".OtpActivity" />
         <activity android:name=".AdminLoginActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".LoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".ScanCode" />
     </application>

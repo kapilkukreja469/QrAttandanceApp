@@ -7,6 +7,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.AdapterView;
@@ -23,22 +24,27 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class RegisterActivity extends AppCompatActivity {
     TextInputEditText userName, email, pass, phone, regNo;
-    Spinner courseName;
-    String[] courseList = {"None", "Andriod", "python", "DataStructure"};
+    Spinner spinner;
+    List<String> courseList = new ArrayList<>();
     String name, emailId, password, mNo, registrationNo, course;
     private FirebaseAuth mAuth;
     ProgressDialog progressDialog;
     Button registerBtn;
     FirebaseDatabase database;
-    DatabaseReference myRef;
+    DatabaseReference myRef, ref2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,26 +57,43 @@ public class RegisterActivity extends AppCompatActivity {
         progressDialog = new ProgressDialog(this);
         regNo = findViewById(R.id.regestrationNo);
         pass = findViewById(R.id.password);
-        courseName = findViewById(R.id.course);
+        spinner = findViewById(R.id.course);
         registerBtn = findViewById(R.id.registerbtn);
         mAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference("Students:");
+        ref2 = database.getReference("Course");
+        courseList.add("-----Select Course-----");
+        progressDialog.show();
 
-        courseName.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        ref2.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                course = courseList[position];
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot d : dataSnapshot.getChildren()) {
+                    courseList.add((String) d.getValue());
+                    progressDialog.dismiss();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+                    course = courseList.get(position);
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                ((TextView) courseName.getSelectedView()).setError("please select course");
+                ((TextView) spinner.getSelectedView()).setError("please select course");
                 return;
             }
         });
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, courseList);
-        courseName.setAdapter(adapter);
+        spinner.setAdapter(adapter);
 
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -130,8 +153,8 @@ public class RegisterActivity extends AppCompatActivity {
             regNo.setError("please enter your registration number");
             return;
         }
-        if (course.equals("None")) {
-            ((TextView) courseName.getSelectedView()).setError("please select course");
+        if (course.equals("-----Select Course-----")) {
+            ((TextView) spinner.getSelectedView()).setError("please select course");
             Toast.makeText(this, "please select course", Toast.LENGTH_SHORT).show();
             return;
         }
