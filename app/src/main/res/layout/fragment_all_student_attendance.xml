@@ -6,12 +6,6 @@
     android:orientation="vertical"
     tools:context=".fragment.AllStudentAttendanceFragment">
 
-    <TextView
-        android:id="@+id/userList"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Student List" />
-
     <Spinner
         android:id="@+id/spinner"
         android:layout_width="match_parent"

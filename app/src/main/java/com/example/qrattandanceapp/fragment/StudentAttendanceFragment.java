@@ -1,6 +1,8 @@
 package com.example.qrattandanceapp.fragment;
 
+import android.app.AlarmManager;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,10 +14,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.qrattandanceapp.OnFragmentInteractionListener;
 import com.example.qrattandanceapp.R;
+import com.example.qrattandanceapp.adapter.ListViewAdapter;
 import com.example.qrattandanceapp.mymodel.ScanDataModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -30,10 +34,10 @@ import java.util.List;
 
 public class StudentAttendanceFragment extends Fragment {
     DatabaseReference reference;
-        ListView listView;
-        ScanDataModel scanDataModel = new ScanDataModel();
-        ArrayList<String> mylist = new ArrayList<String>();
-        ProgressDialog progressDialog;
+    ListView listView;
+    ScanDataModel scanDataModel = new ScanDataModel();
+    ArrayList<ScanDataModel> mylist = new ArrayList<>();
+    ProgressDialog progressDialog;
     private OnFragmentInteractionListener mListener;
 
     public StudentAttendanceFragment() {
@@ -66,8 +70,9 @@ public class StudentAttendanceFragment extends Fragment {
                 FirebaseUser currentUser = mAuth.getCurrentUser();
                 progressDialog.dismiss();
                 if (id.equals(currentUser.getEmail())) {
-                    mylist.add(scanDataModel.getDate() + " time: " + scanDataModel.getTime());
-                    showData(mylist);
+                    mylist.add(scanDataModel);
+                    ListViewAdapter listViewAdapter=new ListViewAdapter(getContext(),mylist);
+                    listView.setAdapter(listViewAdapter);
                 }
             }
 
@@ -88,10 +93,5 @@ public class StudentAttendanceFragment extends Fragment {
                 Toast.makeText(getActivity(), "failed to read value", Toast.LENGTH_SHORT).show();
             }
         });
-    }
-
-    private void showData(List mylist) {
-        final ArrayAdapter<String> adapter3 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, mylist);
-        listView.setAdapter(adapter3);
     }
 }

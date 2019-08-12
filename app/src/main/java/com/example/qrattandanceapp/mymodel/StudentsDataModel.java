@@ -1,9 +1,14 @@
 package com.example.qrattandanceapp.mymodel;
 
 public class StudentsDataModel {
-    String name, emailId, password, mNo, registrationNo, course;
+    String name, emailId, password, mNo, registrationNo, course, image;
 
     public StudentsDataModel() {
+    }
+
+    public StudentsDataModel(String emailId, String image) {
+        this.emailId = emailId;
+        this.image = image;
     }
 
     public StudentsDataModel(String name, String emailId, String password, String mNo, String registrationNo, String course) {
@@ -13,6 +18,14 @@ public class StudentsDataModel {
         this.mNo = mNo;
         this.registrationNo = registrationNo;
         this.course = course;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public String getPassword() {

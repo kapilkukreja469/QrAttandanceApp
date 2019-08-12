@@ -1,7 +1,7 @@
 package com.example.qrattandanceapp.mymodel;
 
 public class ScanDataModel {
-    String mailid,date,time;
+    String mailid,date,time,date_mailid;
 
     public ScanDataModel() {
     }
@@ -10,6 +10,15 @@ public class ScanDataModel {
         this.mailid = mailid;
         this.date = date;
         this.time = time;
+        date_mailid = date+"_"+mailid;
+    }
+
+    public String getDate_mailid() {
+        return date_mailid;
+    }
+
+    public void setDate_mailid(String date_mailid) {
+        this.date_mailid = date_mailid;
     }
 
     public String getTime() {
@@ -42,6 +51,7 @@ public class ScanDataModel {
                 "mailid='" + mailid + '\'' +
                 ", date='" + date + '\'' +
                 ", time='" + time + '\'' +
+                ", date_mailid='" + date_mailid + '\'' +
                 '}';
     }
 }

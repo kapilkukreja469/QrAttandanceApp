@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,7 +47,7 @@ public class OtpActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             Toast.makeText(OtpActivity.this, "sign in successfully", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(OtpActivity.this, AdminModule.class));
+                            startActivity(new Intent(OtpActivity.this, AdminModuleActivity.class));
                             finish();
                         } else if (task.getException() instanceof FirebaseAuthUserCollisionException) {
                             Toast.makeText(OtpActivity.this, "user already exists", Toast.LENGTH_SHORT).show();

@@ -7,7 +7,6 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.AdapterView;
@@ -121,7 +120,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     public void updateUI(FirebaseUser user) {
-        Intent intent = new Intent(RegisterActivity.this, StudentModule.class);
+        Intent intent = new Intent(RegisterActivity.this, StudentModuleActivity.class);
         startActivity(intent);
         finish();
     }

@@ -1,11 +1,13 @@
 package com.example.qrattandanceapp.fragment;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -19,6 +21,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.qrattandanceapp.OnFragmentInteractionListener;
 import com.example.qrattandanceapp.R;
+import com.example.qrattandanceapp.adapter.ListViewAdapter;
 import com.example.qrattandanceapp.mymodel.ScanDataModel;
 import com.example.qrattandanceapp.mymodel.StudentsDataModel;
 import com.google.firebase.auth.FirebaseAuth;
@@ -37,7 +40,7 @@ public class AllStudentAttendanceFragment extends Fragment {
     ListView listView;
     ScanDataModel scanDataModel = new ScanDataModel();
     StudentsDataModel studentsDataModel = new StudentsDataModel();
-    ArrayList<String> mylist = new ArrayList<String>();
+    ArrayList<ScanDataModel> mylist = new ArrayList<>();
     List<String> studentList = new ArrayList<>();
     String student;
     ProgressDialog progressDialog;
@@ -87,6 +90,7 @@ public class AllStudentAttendanceFragment extends Fragment {
                             getData();
                         }
                     }
+
                     @Override
                     public void onNothingSelected(AdapterView<?> parent) {
                         Toast.makeText(getContext(), "Nothing selected", Toast.LENGTH_SHORT).show();
@@ -122,8 +126,9 @@ public class AllStudentAttendanceFragment extends Fragment {
                 String uId = scanDataModel.getMailid();
                 progressDialog.dismiss();
                 if (uId.equals(student)) {
-                    mylist.add(scanDataModel.getDate() + " time: " + scanDataModel.getTime());
-                    showData(mylist);
+                    mylist.add(scanDataModel);
+                    ListViewAdapter listViewAdapter = new ListViewAdapter(getContext(), mylist);
+                    listView.setAdapter(listViewAdapter);
                 }
             }
 
@@ -144,10 +149,5 @@ public class AllStudentAttendanceFragment extends Fragment {
                 Toast.makeText(getActivity(), "failed to read value", Toast.LENGTH_SHORT).show();
             }
         });
-    }
-
-    private void showData(List mylist) {
-        final ArrayAdapter<String> adapter3 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, mylist);
-        listView.setAdapter(adapter3);
     }
 }

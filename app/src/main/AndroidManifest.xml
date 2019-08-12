@@ -16,10 +16,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".StudentModule"
+            android:name=".StudentModuleActivity"
             android:label="@string/title_activity_student_module" />
         <activity
-            android:name=".AdminModule"
+            android:name=".AdminModuleActivity"
             android:label="@string/title_activity_admin_module">
         </activity>
         <activity android:name=".OtpActivity" />

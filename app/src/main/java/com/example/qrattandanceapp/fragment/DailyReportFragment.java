@@ -18,6 +18,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.qrattandanceapp.OnFragmentInteractionListener;
 import com.example.qrattandanceapp.R;
+import com.example.qrattandanceapp.adapter.ListViewAdapter;
 import com.example.qrattandanceapp.mymodel.ScanDataModel;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -26,16 +27,18 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class DailyReportFragment extends Fragment {
     DatabaseReference reference;
     ListView listView;
     ScanDataModel scanDataModel;
-    ArrayList<String> mylist = new ArrayList<String>();
+    ArrayList<ScanDataModel> mylist = new ArrayList<>();
     ProgressDialog progressDialog;
     EditText date;
     Button btn;
+    Calendar c;
     private OnFragmentInteractionListener mListener;
 
     public DailyReportFragment() {
@@ -76,8 +79,9 @@ public class DailyReportFragment extends Fragment {
                 String id = scanDataModel.getDate();
                 progressDialog.dismiss();
                 if (id.equals(date.getText().toString())) {
-                    mylist.add(scanDataModel.getMailid() + "  TIME: " + scanDataModel.getTime());
-                    showData(mylist);
+                    mylist.add(scanDataModel);
+                    ListViewAdapter listViewAdapter=new ListViewAdapter(getContext(),mylist);
+                    listView.setAdapter(listViewAdapter);
                 }
             }
 
@@ -100,8 +104,4 @@ public class DailyReportFragment extends Fragment {
         });
     }
 
-    private void showData(List mylist) {
-        final ArrayAdapter<String> adapter3 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, mylist);
-        listView.setAdapter(adapter3);
-    }
 }

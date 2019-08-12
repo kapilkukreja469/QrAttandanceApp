@@ -12,8 +12,8 @@
         android:title="Student" />
 
     <item
-        android:id="@+id/navigation_qr_generator"
-        android:icon="@drawable/scan"
-        android:title="Qr Generator" />
+        android:id="@+id/navigation_Students_Profile"
+        android:icon="@drawable/group"
+        android:title="Students_Profile" />
 
 </menu>
