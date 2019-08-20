@@ -166,7 +166,7 @@ public class RegisterActivity extends AppCompatActivity {
     public boolean isValidPassword(final String password) {
         Pattern pattern;
         Matcher matcher;
-        final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{4,}$";
+        final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z])(?=\\S+$).{2,}$";
         pattern = Pattern.compile(PASSWORD_PATTERN);
         matcher = pattern.matcher(password);
         return matcher.matches();
@@ -174,7 +174,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void storeDataInFirebase(DatabaseReference myRef) {
         StudentsDataModel studentsModel = new StudentsDataModel(name, emailId, password, mNo, registrationNo, course);
-        String id = myRef.push().getKey();
+        String id = mAuth.getCurrentUser().getUid();
         myRef.child(id).setValue(studentsModel);
     }
 }

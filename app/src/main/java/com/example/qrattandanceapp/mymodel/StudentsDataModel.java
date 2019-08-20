@@ -24,8 +24,8 @@ public class StudentsDataModel {
         return image;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setImage(String url) {
+        this.image = url;
     }
 
     public String getPassword() {
@@ -72,6 +72,11 @@ public class StudentsDataModel {
         return course;
     }
 
+    public void setCourse(String course) {
+        this.course = course;
+    }
+
+
     @Override
     public String toString() {
         return "StudentsDataModel{" +
@@ -81,10 +86,7 @@ public class StudentsDataModel {
                 ", mNo='" + mNo + '\'' +
                 ", registrationNo='" + registrationNo + '\'' +
                 ", course='" + course + '\'' +
+                ", image='" + image + '\'' +
                 '}';
-    }
-
-    public void setCourse(String course) {
-        this.course = course;
     }
 }

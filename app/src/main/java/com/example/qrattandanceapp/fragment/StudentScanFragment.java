@@ -1,7 +1,6 @@
 package com.example.qrattandanceapp.fragment;
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -13,7 +12,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import com.example.qrattandanceapp.OnFragmentInteractionListener;
 import com.example.qrattandanceapp.R;
-import com.example.qrattandanceapp.ScanCode;
+import com.example.qrattandanceapp.ScanQrCode;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -64,7 +63,7 @@ public class StudentScanFragment extends Fragment {
         scanBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), ScanCode.class);
+                Intent intent = new Intent(getActivity(), ScanQrCode.class);
                 intent.putExtra("email", emailId);
                 startActivity(intent);
             }

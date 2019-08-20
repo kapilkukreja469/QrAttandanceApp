@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -32,8 +33,6 @@ import java.util.Map;
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
     Activity context;
     List<StudentsDataModel> list;
-//    Map<Integer, Bitmap> imagesMap = new HashMap<>();
-    Bitmap bmp;
     StorageReference mStorageRef = FirebaseStorage.getInstance().getReference();
     final long ONE_MEGABYTE = 1024 * 1024;
 
@@ -58,36 +57,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.mNo.setText(dataModel.getmNo());
         holder.regNo.setText(dataModel.getRegistrationNo());
         holder.course.setText(dataModel.getCourse());
-//        holder.imageView.setImageDrawable(Bitmap.createBitmap(dataModel.getImage()));
-        Toast.makeText(context, "url="+dataModel.getImage(), Toast.LENGTH_SHORT).show();
+        Log.d("url", "getImage" + dataModel.getImage());
         Glide.with(context).load(dataModel.getImage()).into(holder.imageView);
-//        if (imagesMap.containsKey(position)) {
-//            holder.imageView.setImageBitmap(imagesMap.get(position));
-//        }
-//        else {
-//            downloadImage(dataModel.getEmailId(), holder.imageView, position);
-//        }
-
     }
-
-    private void downloadImage(final String emailId, final ImageView img, final int pos) {
-        mStorageRef.child("profile_images").child(emailId)
-                .getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
-            @Override
-            public void onSuccess(byte[] bytes) {
-                Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-//                profImg.setImageBitmap(Bitmap.createBitmap(bmp));
-//                img.setImageBitmap(bmp);
-//                imagesMap.put(pos, bmp);
-                //Toast.makeText(getActivity(), "" + bmp, Toast.LENGTH_SHORT).show();
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-            }
-        });
-    }
-
 
     @Override
     public int getItemCount() {

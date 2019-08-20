@@ -2,6 +2,7 @@ package com.example.qrattandanceapp.fragment;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,8 +40,7 @@ public class AllStudentProfileFragment extends Fragment {
     RecyclerView recyclerView;
     RecyclerViewAdapter recyclerViewAdapter;
     List<StudentsDataModel> list = new ArrayList<>();
-    String key,value;
-    final long ONE_MEGABYTE = 1024 * 1024;
+    String key, value;
     private StorageReference mStorageRef;
 
     public AllStudentProfileFragment() {
@@ -54,7 +54,6 @@ public class AllStudentProfileFragment extends Fragment {
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage("Please Wait...");
         progressDialog.show();
-//        mStorageRef = mStorageRef.child("profile_images").child(currentUser.getEmail());
     }
 
     @Override
@@ -70,66 +69,21 @@ public class AllStudentProfileFragment extends Fragment {
         recyclerViewAdapter = new RecyclerViewAdapter(getActivity(), getData());
         recyclerView.setAdapter(recyclerViewAdapter);
         mStorageRef = FirebaseStorage.getInstance().getReference();
-//        mStorageRef = mStorageRef.child("profile_images").child(studentsModel.getEmailId());
         return v;
     }
-
-    private void downloadImage() {
-        mref.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                key=dataSnapshot.getKey();
-                value=dataSnapshot.getValue().toString();
-                studentsModel.setImage(value);
-                Toast.makeText(getContext(), key + "-->" + value, Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(getContext(), databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-
-            }
-        });
-    }
-//        mStorageRef.child("profile_images").child(studentsModel.getEmailId())
-//                .getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
-//            @Override
-//            public void onSuccess(byte[] bytes) {
-//                Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-////                profImg.setImageBitmap(Bitmap.createBitmap(bmp));
-//                studentsModel.setImage(bmp.toString());
-//                Toast.makeText(getActivity(), "" + bmp, Toast.LENGTH_SHORT).show();
-//            }
-//        }).addOnFailureListener(new OnFailureListener() {
-//            @Override
-//            public void onFailure(@NonNull Exception exception) {
-//            }
-//        });
-//    }
 
     public List<StudentsDataModel> getData() {
         reference.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 studentsModel = dataSnapshot.getValue(StudentsDataModel.class);
+                studentsModel.setImage(dataSnapshot.child("url").getValue().toString());
                 progressDialog.dismiss();
-                downloadImage();
+//                Log.d("url","setData="+dataSnapshot.toString());
+//                Log.d("url","setData="+studentsModel);
                 list.add(studentsModel);
+                Log.d("url","listData="+list.toString());
+
                 recyclerViewAdapter.notifyDataSetChanged();
             }
 

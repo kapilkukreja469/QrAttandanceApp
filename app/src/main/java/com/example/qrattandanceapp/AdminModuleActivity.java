@@ -11,6 +11,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -62,6 +63,21 @@ public class AdminModuleActivity extends AppCompatActivity{
     public void onBackPressed() {
         Toast.makeText(this, "Kindly logout to get Exit", Toast.LENGTH_SHORT).show();
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d("Atteandance","onPause");
+        mAuth.signOut();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d("Atteandance","onStop");
+        mAuth.signOut();
+    }
+
     private void setFragment(Fragment fragment) {
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.adminfragment, fragment)

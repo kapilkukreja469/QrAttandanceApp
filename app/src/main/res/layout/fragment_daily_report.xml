@@ -1,37 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".fragment.DailyReportFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/date"
+        <DatePicker
+            android:id="@+id/datePicker"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="Enter date dd.mm.yyyy"
-            android:inputType="date"
-            android:textSize="20sp" />
+            android:layout_height="match_parent"
+            android:visibility="visible" />
 
         <Button
-            android:id="@+id/getData"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="2dp"
-            android:layout_weight="3"
-            android:background="@drawable/circleshape"
-            android:text="getData" />
-    </LinearLayout>
+            android:id="@+id/ok"
+            android:layout_width="50dp"
+            android:layout_height="40dp"
+            android:layout_marginRight="60dp"
+            android:background="@drawable/circleshapedit2"
+            android:layout_gravity="right"
+            android:text="ok"
+            android:textColor="#FAE02036" />
 
-    <ListView
-        android:id="@+id/listView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-</LinearLayout>
+        <ListView
+            android:id="@+id/listView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</ScrollView>

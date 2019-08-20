@@ -85,7 +85,7 @@ public class StudentModuleActivity extends AppCompatActivity implements OnFragme
         database = FirebaseDatabase.getInstance();
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Profile pic Uploading...");
-        myRef = database.getReference("profilePic");
+        myRef = database.getReference("Students:");
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -147,7 +147,7 @@ public class StudentModuleActivity extends AppCompatActivity implements OnFragme
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 Log.d("upload_img", "image uploaded successfully");
-                Toast.makeText(StudentModuleActivity.this, "Images uploaded successfuly", Toast.LENGTH_SHORT).show();
+                Toast.makeText(StudentModuleActivity.this, "Images uploaded successfully", Toast.LENGTH_SHORT).show();
                 progressDialog.dismiss();
             }
         });
@@ -156,7 +156,8 @@ public class StudentModuleActivity extends AppCompatActivity implements OnFragme
             public void onSuccess(Uri uri) {
                 Log.d("tags", uri.toString());
                 StudentsDataModel dataModel=new StudentsDataModel(currentUser.getEmail(),uri.toString());
-                myRef.child(currentUser.getUid()).setValue(dataModel);
+                Toast.makeText(StudentModuleActivity.this,dataModel+"", Toast.LENGTH_SHORT).show();
+                myRef.child(currentUser.getUid()).child("url").setValue(uri.toString());
             }
         });
     }

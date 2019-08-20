@@ -38,7 +38,6 @@
             android:drawablePadding="2dp"
             android:inputType="number"
             android:padding="10dp"
-            android:text="9729625776"
             android:textSize="18sp" />
 
         <EditText
